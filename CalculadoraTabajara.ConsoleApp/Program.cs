@@ -16,6 +16,9 @@
 
                 Console.WriteLine("1 - Somar");
                 Console.WriteLine("2 - Subtrair");
+                Console.WriteLine("3 - Multiplicação");
+                Console.WriteLine("4 - Divisão");
+                Console.WriteLine("5 - Tabuada");
                 Console.WriteLine("S - Sair");
 
                 Console.WriteLine();
@@ -30,25 +33,29 @@
 
                 Console.Write("Digite o primeiro número: ");
                 string primeiroNumeroString = Console.ReadLine();
-                int primeiroNumero = Convert.ToInt32(primeiroNumeroString); //converter para numero inteiro
+                decimal primeiroNumero = Convert.ToDecimal(primeiroNumeroString); //ToInt32 converter para numero inteiro
 
                 Console.Write("Digite o segundo número: ");
                 string segundoNumeroString = Console.ReadLine();
-                int segundoNumero = Convert.ToInt32(segundoNumeroString);
+                decimal segundoNumero = Convert.ToDecimal(segundoNumeroString); //ToDecimal converter para numero decimal
 
-                int resultado = 0;
+                decimal resultado = 0;
 
-                if (opcao == "1")
-                {
+                if (opcao == "1") //adicao
                     resultado = primeiroNumero + segundoNumero;
-                }
-                else
-                {
+
+                else if (opcao == "2") //subtracao
                     resultado = primeiroNumero - segundoNumero;
-                }
+
+                else if (opcao == "3") //multiplicacao
+                    resultado = primeiroNumero * segundoNumero;
+
+                else if (opcao == "4") //divisao
+                    resultado = primeiroNumero / segundoNumero;
+
 
                 Console.WriteLine("--------------------------------");
-                Console.WriteLine("O resultado é: " + resultado);
+                Console.WriteLine("O resultado é: " + resultado.ToString("F3"));
                 Console.WriteLine("--------------------------------");
 
                 Console.Write("Deseja continuar? [S/N]");
