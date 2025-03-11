@@ -1,9 +1,14 @@
-﻿namespace CalculadoraTabajara.ConsoleApp
+﻿using System.Runtime.CompilerServices;
+
+namespace CalculadoraTabajara.ConsoleApp
 {
     internal class Program
     {
         static void Main(string[] args)
         {
+            string[] operacoesRealizadas = new string[100];
+            int contador = 0;
+
             //loop de execução
             while (true)
             {
@@ -17,6 +22,7 @@
                 Console.WriteLine("3 - Multiplicação");
                 Console.WriteLine("4 - Divisão");
                 Console.WriteLine("5 - Tabuada");
+                Console.WriteLine("6 - Histórico de Operações");
                 Console.WriteLine("S - Sair");
 
                 Console.WriteLine();
@@ -27,9 +33,9 @@
                 if (opcao == "S")
                     break;
 
-
+                
                 else if (opcao == "5") //tabuada
-                {
+                {                    
                     Console.WriteLine("\n################################");
                     Console.WriteLine("------------TABUADA-------------");
                     Console.WriteLine("################################\n");
@@ -46,11 +52,29 @@
 
                         string linhaTabuada = $"{numeroTabuada} x {contagem} = {resultadoTabuada}";
 
-                        Console.WriteLine(linhaTabuada);                        
+                        Console.WriteLine(linhaTabuada);
                     }
+
+                    Console.ReadLine();    
+                    continue;
+                }
+
+                else if (opcao == "6")
+                {
+                    Console.WriteLine("\n################################");
+                    Console.WriteLine("-----HISTÓRICO DE OPERAÇÕES-----");
+                    Console.WriteLine("################################\n");
+
+                    for (int operacoes = 0; operacoes < operacoesRealizadas.Length; operacoes++)
+                    {
+                        if (operacoesRealizadas[operacoes] != null)
+                            Console.WriteLine(operacoesRealizadas[operacoes]);
+                    }
+
                     Console.ReadLine();
                     continue;
                 }
+
 
                     Console.Write("Digite o primeiro número: ");
                     string primeiroNumeroString = Console.ReadLine();
@@ -62,18 +86,30 @@
 
                     decimal resultado = 0;
 
-                    if (opcao == "1") //adicao
+                switch (opcao)
+                {
+                    case "1": //adicao
                         resultado = primeiroNumero + segundoNumero;
+                        operacoesRealizadas[contador] = $"{primeiroNumero} + {segundoNumero} = {resultado}";
+                        break;
 
-                    else if (opcao == "2") //subtracao
+                    case "2": //subtracao
                         resultado = primeiroNumero - segundoNumero;
+                        operacoesRealizadas[contador] = $"{primeiroNumero} - {segundoNumero} = {resultado}";
+                        break;
 
-                    else if (opcao == "3") //multiplicacao
+                    case "3": //multiplicacao
                         resultado = primeiroNumero * segundoNumero;
+                        operacoesRealizadas[contador] = $"{primeiroNumero} x {segundoNumero} = {resultado}";
+                        break;
 
-                    else if (opcao == "4") //divisao
+                    case "4": //divisao
                         resultado = primeiroNumero / segundoNumero;
+                        operacoesRealizadas[contador] = $"{primeiroNumero} / {segundoNumero} = {resultado}";
+                        break;
+                }
 
+                contador += 1;
 
                     Console.WriteLine("--------------------------------");
                     Console.WriteLine("O resultado é: " + resultado.ToString("F3"));
@@ -82,11 +118,8 @@
                     Console.Write("Deseja continuar? [S/N]");
                     string opcaoContinuar = Console.ReadLine().ToUpper();
 
-                    if (opcaoContinuar == "N")
-                    {
-                        break;
-                    }
-
+                    if (opcaoContinuar == "N")                    
+                        break;                    
 
                     Console.ReadLine();
             }
