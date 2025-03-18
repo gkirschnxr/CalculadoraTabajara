@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 
 namespace CalculadoraTabajara.ConsoleApp
 {
@@ -8,8 +9,7 @@ namespace CalculadoraTabajara.ConsoleApp
         {
             //loop de execução
             while (true)
-            {
-                
+            { 
                 string opcao = ExibirMenu();
 
                 if (OpcaoSair(opcao))
@@ -23,8 +23,6 @@ namespace CalculadoraTabajara.ConsoleApp
 
                 else
                     ExibirResultado(RealizarCalculo(opcao));
-
-
             }
         }
 
@@ -132,9 +130,7 @@ namespace CalculadoraTabajara.ConsoleApp
                     break;
             }
 
-            Console.WriteLine("----------------------------------");
-            Console.Write("Aperte ENTER para continuar");
-            Console.ReadLine();
+            return resultado;
         }
 
         static void ExibirResultado(decimal resultado)
@@ -143,6 +139,8 @@ namespace CalculadoraTabajara.ConsoleApp
             Console.WriteLine("O resultado é: " + resultado.ToString("F3"));
             Console.WriteLine("--------------------------------");
 
+            Console.WriteLine("----------------------------------");
+            Console.Write("Aperte ENTER para continuar");
             Console.ReadLine();
         }
     }
