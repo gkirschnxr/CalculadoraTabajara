@@ -6,30 +6,23 @@ namespace CalculadoraTabajara.ConsoleApp
     {
         static void Main(string[] args)
         {
-            string[] operacoesRealizadas = new string[100];
-            int contador = 0;
-
             //loop de execução
             while (true)
             {
                 
                 string opcao = ExibirMenu();
 
-                if (OpcaoSair(opcao) == true)
+                if (OpcaoSair(opcao))
                     break;
 
                 else if (OpcaoTabuada(opcao))
                     ExibirTabuada();
 
                 else if (OpcaoHistorico(opcao))
-                    ExibirHistorico(operacoesRealizadas);
+                    ExibirHistorico();
 
-                else if ()
-                    RealizarCalculo();
-
-                   
-
-                
+                else
+                    ExibirResultado(RealizarCalculo(opcao));
 
 
             }
@@ -53,7 +46,7 @@ namespace CalculadoraTabajara.ConsoleApp
             Console.WriteLine();
             Console.Write("Escolha uma opção: ");
 
-            string opcao = Console.ReadLine().ToUpper();
+            string opcao = Console.ReadLine()!.ToUpper();
 
             return opcao;
         }
@@ -81,18 +74,6 @@ namespace CalculadoraTabajara.ConsoleApp
             Console.Write("Digite um número para realizar a consulta: ");
             int numeroTabuada = Convert.ToInt32(Console.ReadLine());
 
-
-
-            for (int contagem = 1; contagem <= 10; contagem++)
-            {
-                int resultadoTabuada = numeroTabuada * contagem;
-
-
-                string linhaTabuada = $"{numeroTabuada} x {contagem} = {resultadoTabuada}";
-
-                Console.WriteLine(linhaTabuada);
-            }
-
             Console.WriteLine("----------------------------------");
             Console.Write("Aperte ENTER para continuar");
             Console.ReadLine();
@@ -105,16 +86,16 @@ namespace CalculadoraTabajara.ConsoleApp
             return OpcaoHistoricoFoiEscolhida;
         }
 
-        static void ExibirHistorico(string[] operacoesRealizadas)
+        static void ExibirHistorico()
         {
             Console.WriteLine("\n################################");
             Console.WriteLine("-----HISTÓRICO DE OPERAÇÕES-----");
             Console.WriteLine("################################\n");
 
-            for (int operacoes = 0; operacoes < operacoesRealizadas.Length; operacoes++)
+            for (int operacoes = 0; operacoes < Calculadora.operacoesRealizadas.Length; operacoes++)
             {
-                if (operacoesRealizadas[operacoes] != null)
-                    Console.WriteLine(operacoesRealizadas[operacoes]);
+                if (Calculadora.operacoesRealizadas[operacoes] != null)
+                    Console.WriteLine(Calculadora.operacoesRealizadas[operacoes]);
             }
 
             Console.WriteLine("----------------------------------");
@@ -122,7 +103,7 @@ namespace CalculadoraTabajara.ConsoleApp
             Console.ReadLine();
         }
 
-        static void RealizarCalculo(string operacao, string[] operacoesRealizadas, string[] contador)
+        static decimal RealizarCalculo(string operacao)
         {
             Console.Write("Digite o primeiro número: ");
             decimal primeiroNumero = Convert.ToDecimal(Console.ReadLine()); //ToInt32 converter para numero inteiro
@@ -135,37 +116,32 @@ namespace CalculadoraTabajara.ConsoleApp
             switch (operacao)
             {
                 case "1": //adicao
-                    resultado = primeiroNumero + segundoNumero;
-                    operacoesRealizadas[contador] = $"{primeiroNumero} + {segundoNumero} = {resultado}";
+                    resultado = Calculadora.Somar(primeiroNumero, segundoNumero);
                     break;
 
                 case "2": //subtracao
-                    resultado = primeiroNumero - segundoNumero;
-                    operacoesRealizadas[contador] = $"{primeiroNumero} - {segundoNumero} = {resultado}";
+                    resultado = Calculadora.Subtrair(primeiroNumero, segundoNumero);
                     break;
 
                 case "3": //multiplicacao
-                    resultado = primeiroNumero * segundoNumero;
-                    operacoesRealizadas[contador] = $"{primeiroNumero} x {segundoNumero} = {resultado}";
+                    resultado = Calculadora.Multiplicar(primeiroNumero, segundoNumero);
                     break;
 
                 case "4": //divisao
-                    resultado = primeiroNumero / segundoNumero;
-                    operacoesRealizadas[contador] = $"{primeiroNumero} / {segundoNumero} = {resultado}";
+                    resultado = Calculadora.Dividir(primeiroNumero, segundoNumero);
                     break;
             }
 
-            contador += 1;
+            Console.WriteLine("----------------------------------");
+            Console.Write("Aperte ENTER para continuar");
+            Console.ReadLine();
+        }
 
+        static void ExibirResultado(decimal resultado)
+        {
             Console.WriteLine("--------------------------------");
             Console.WriteLine("O resultado é: " + resultado.ToString("F3"));
             Console.WriteLine("--------------------------------");
-
-            Console.Write("Deseja continuar? [S/N]");
-            string opcaoContinuar = Console.ReadLine().ToUpper();
-
-            if (opcaoContinuar == "N")
-                break;
 
             Console.ReadLine();
         }
